@@ -46,10 +46,16 @@ def is_outlier(df):
 def save(df):
     df.to_csv('../data/clean/apartments_clean.csv', index=False)
 
-run1 = load_raw()
-run2 = read_raw(run1)
-run3 = clean(run2)
-run4 = convert_int64(run3)
-run5 = flag_outliers(run4)
-run6 = is_outlier(run5)
-run7 = save(run6)
+
+def main():
+    run1 = load_raw()
+    run2 = read_raw(run1)
+    run3 = clean(run2)
+    run4 = convert_int64(run3)
+    run5 = flag_outliers(run4)
+    run6 = is_outlier(run5)
+    run7 = save(run6)
+
+if __name__ == '__main__':
+    main()
+    
