@@ -16,7 +16,7 @@ Ferramentas: Python (pandas, NumPy), PostgreSQL 16, Docker Compose.
 ```
 data/raw/     CSVs originais (um por mês)
 data/clean/   CSV limpo gerado pelo script
-Python/       clean_apartments.py e notebooks de exploração
+Python/       clean_apartments.py, gus.ipynb (salários) e notebooks de exploração
 sql/          01_create_tables.sql, 02_load_data.sql, 03_views.sql
 docker-compose.yml
 ```
@@ -48,11 +48,27 @@ Para recriar o banco do zero: `docker compose down -v` e depois `docker compose 
 - Em Varsóvia, a mediana foi de 14.465 em ago/2023 para 17.917 em jun/2024, alta de 23,9%.
 - A variação mensal ficou entre 0,86% e 4,43%, com os maiores saltos em dez/2023 e jan/2024.
 
+## Preço × salário
+O `Python/gus.ipynb` baixa o salário médio mensal bruto por powiat da API do Banco de Dados Local do GUS (BDL, variável 64428, 380 powiats, 4 páginas de 100), fica com as 15 cidades que aparecem nos apartamentos e junta com a mediana do preço por m².
+
+`months_per_m2` = mediana do preço por m² / salário de 2024.
+
+| Cidade | Mediana do m² (PLN) | Salário 2024 (PLN) | Meses de salário por m² |
+|---|---|---|---|
+| Varsóvia | 16.779 | 10.715 | 1,57 |
+| Cracóvia | 15.000 | 10.455 | 1,43 |
+| Breslávia | 12.392 | 9.425 | 1,31 |
+| ... | | | |
+| Katowice | 7.929 | 10.052 | 0,79 |
+| Radom | 6.324 | 8.269 | 0,76 |
+
+1 m² custa de 0,76 (Radom) a 1,57 (Varsóvia) salários mensais brutos. Katowice tem um dos maiores salários e um dos m² mais baratos, então fica perto do fim.
+
 ## Limitações
 - Os preços são de anúncios, não de vendas fechadas.
 - A série cobre só 11 meses, então não dá para separar tendência de sazonalidade.
+- Os salários do GUS são médias anuais e o valor de 2024 vale para todo o período dos preços (ago/2023 a jun/2024).
 - Os arquivos de aluguel (`apartments_rent_*`) estão em `data/raw/`, mas ainda não entram no pipeline.
 
 ## Próximos passos
 - Modelo de regressão simples com scikit-learn para Varsóvia.
-- Comparar preço por m² com salário médio por região (dados do GUS).
