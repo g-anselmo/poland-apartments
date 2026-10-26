@@ -12,6 +12,8 @@ What it does:
 - Writes `data/clean/apartments_clean.csv` (92,967 rows, 32 columns).
 - Docker starts Postgres 16, creates the table, loads the CSV and creates the views automatically.
 
+Data: [Apartment Prices in Poland](https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland) (Kaggle, by krzysztofjamroz), monthly snapshots of sale listings. The raw CSVs are not in this repo: download them and put them in `data/raw/`.
+
 Tools: Python (pandas, NumPy), PostgreSQL 16, Docker Compose.
 
 ## Structure

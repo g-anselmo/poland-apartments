@@ -10,6 +10,8 @@ Principais passos:
 - Gera `data/clean/apartments_clean.csv` (92.967 linhas, 32 colunas).
 - O Docker sobe o Postgres 16, cria a tabela, carrega o CSV e cria as views, tudo sozinho.
 
+Dados: [Apartment Prices in Poland](https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland) (Kaggle, de krzysztofjamroz), fotos mensais de anúncios de venda. Os CSVs originais não estão no repositório: baixe e coloque em `data/raw/`.
+
 Ferramentas: Python (pandas, NumPy), PostgreSQL 16, Docker Compose.
 
 ## Estrutura
