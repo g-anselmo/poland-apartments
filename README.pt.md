@@ -12,13 +12,13 @@ Principais passos:
 
 Dados: [Apartment Prices in Poland](https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland) (Kaggle, de krzysztofjamroz), fotos mensais de anúncios de venda. Os CSVs originais não estão no repositório: baixe e coloque em `data/raw/`.
 
-Ferramentas: Python (pandas, NumPy), PostgreSQL 16, Docker Compose.
+Ferramentas: Python (pandas, NumPy, scikit-learn), PostgreSQL 16, Docker Compose.
 
 ## Estrutura
 ```
 data/raw/     CSVs originais (um por mês)
 data/clean/   CSV limpo gerado pelo script
-Python/       clean_apartments.py, gus.ipynb (salários) e notebooks de exploração
+Python/       clean_apartments.py, gus.ipynb (salários), ml_warsaw.ipynb (modelo de preço) e notebooks de exploração
 sql/          01_create_tables.sql, 02_load_data.sql, 03_views.sql
 docker-compose.yml
 ```
@@ -66,6 +66,17 @@ O `Python/gus.ipynb` baixa o salário médio mensal bruto por powiat da API do B
 
 1 m² custa de 0,76 (Radom) a 1,57 (Varsóvia) salários mensais brutos. Katowice tem um dos maiores salários e um dos m² mais baratos, então fica perto do fim.
 
+## Modelo de preço (Varsóvia)
+
+Uma regressão linear (`ml_warsaw.ipynb`) prevê o preço anunciado a partir da área, da distância do centro e do ano de construção.
+
+- R² no conjunto de teste: **0,72**
+- Cada m² a mais: **+16.548 zł**
+- Cada km a mais do centro: **−42.328 zł**
+- Cada ano mais novo: **+1.831 zł**
+
+Três variáveis explicam cerca de 72% da variação do preço. O resto vem do que os dados não têm, como acabamento, andar ou vista. Os preços são anunciados, não de venda.
+
 ## Limitações
 - Os preços são de anúncios, não de vendas fechadas.
 - A série cobre só 11 meses, então não dá para separar tendência de sazonalidade.
@@ -73,4 +84,4 @@ O `Python/gus.ipynb` baixa o salário médio mensal bruto por powiat da API do B
 - Os arquivos de aluguel (`apartments_rent_*`) estão em `data/raw/`, mas ainda não entram no pipeline.
 
 ## Próximos passos
-- Modelo de regressão simples com scikit-learn para Varsóvia.
+- Testar mais variáveis (andar, quartos, comodidades) e comparar com o modelo de 3 variáveis.
